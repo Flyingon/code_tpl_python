@@ -17,7 +17,7 @@ def get_hour_ago_str(num):
     hours = datetime.timedelta(hours=num)
     ago = now - hours
     ago = datetime.datetime(ago.year, ago.month, ago.day, ago.hour, 0, 0, 0)
-    future = datetime.datetime(now.year, now.month, now.day, now.hour+1, 0, 0, 0)
+    future = datetime.datetime(now.year, now.month, now.day, now.hour + 1, 0, 0, 0)
     return ago.strftime("%Y-%m-%d %H:%M:%S"), future.strftime("%Y-%m-%d %H:%M:%S")
 
 
@@ -121,9 +121,23 @@ def get_duration_days_ago_ts(num):
     return ts_from * 1000, ts_to * 1000
 
 
+# 获取num后前到当前的时间戳
+def get_ts_after_days(num):
+    """
+    返回num天后当前时间点的时间戳，精确到秒
+    """
+    now = datetime.datetime.now()
+    days = datetime.timedelta(days=num)
+    future = now + days
+    future_time = future.timetuple()
+    ret = int(time.mktime(future_time))
+    return ret
+
+
 if __name__ == '__main__':
     # print(get_month_ago_ts(10))
     # print(get_week_ago_ts(10))
     # print(get_days_ago_ts(9))
-    print(get_hour_ago_str(24))
+    # print(get_hour_ago_str(24))
     # print(get_duration_days_ago_ts(1))
+    print(get_ts_after_days(30))

@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+import chardet
+
+
+def to_unicode(unicode_or_str):
+    if isinstance(unicode_or_str, str):
+        value = unicode_or_str.decode('utf-8')
+    else:
+        value = unicode_or_str
+    return value
+
+
+def to_str(unicode_or_str):
+    if isinstance(unicode_or_str, unicode):
+        value = unicode_or_str.encode('utf-8')
+    else:
+        value = unicode_or_str
+    return value
+
+
+def to_unicode_all(unicode_or_str):
+    if isinstance(unicode_or_str, str):
+        fencoding = chardet.detect(unicode_or_str)
+        value = unicode_or_str.decode(fencoding)
+    else:
+        value = unicode_or_str
+    return value
