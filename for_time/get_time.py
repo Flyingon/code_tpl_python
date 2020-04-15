@@ -140,4 +140,5 @@ if __name__ == '__main__':
     # print(get_days_ago_ts(9))
     # print(get_hour_ago_str(24))
     # print(get_duration_days_ago_ts(1))
-    print(get_ts_after_days(30))
+    # print(get_ts_after_days(30))
+    print(get_hour_ago_ts(2))
