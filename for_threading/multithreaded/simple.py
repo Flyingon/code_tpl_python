@@ -1,13 +1,14 @@
 import threading
+import requests
 
 
-def worker():
+def worker(num):
     """thread worker function"""
-    print('Worker')
+    print('Worker', num)
 
 
 threads = []
-for i in range(5):
-    t = threading.Thread(target=worker)
+for i in range(100):
+    t = threading.Thread(target=worker(i))
     threads.append(t)
     t.start()
