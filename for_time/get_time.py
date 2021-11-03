@@ -134,6 +134,13 @@ def get_ts_after_days(num):
     return ret
 
 
+# 获取下一小时的时间戳
+def hour_rounder(t):
+    # Rounds to nearest hour by adding a timedelta hour if minute >= 30
+    return (t.replace(second=0, microsecond=0, minute=0, hour=t.hour)
+            + datetime.timedelta(hours=t.minute // 30))
+
+
 if __name__ == '__main__':
     # print(get_month_ago_ts(10))
     # print(get_week_ago_ts(10))
@@ -141,4 +148,8 @@ if __name__ == '__main__':
     # print(get_hour_ago_str(24))
     # print(get_duration_days_ago_ts(1))
     # print(get_ts_after_days(30))
-    print(get_hour_ago_ts(2))
+    # print(get_hour_ago_ts(2))
+    t = hour_rounder(datetime.datetime.now())
+    print(t)
+    print(int(time.mktime(t.timetuple())))
+
