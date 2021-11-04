@@ -134,11 +134,18 @@ def get_ts_after_days(num):
     return ret
 
 
-# 获取下一小时的时间戳
+# 就近获取正点时间时间戳
 def hour_rounder(t):
     # Rounds to nearest hour by adding a timedelta hour if minute >= 30
     return (t.replace(second=0, microsecond=0, minute=0, hour=t.hour)
             + datetime.timedelta(hours=t.minute // 30))
+
+
+# 时间戳转为可以展示的时间
+def ts_to_show(ts, fmt="%Y-%m-%d %H:%M:%S"):
+    time_array = time.localtime(int(ts))
+    show_time = time.strftime(fmt, time_array)
+    return show_time
 
 
 if __name__ == '__main__':
@@ -152,4 +159,3 @@ if __name__ == '__main__':
     t = hour_rounder(datetime.datetime.now())
     print(t)
     print(int(time.mktime(t.timetuple())))
-
