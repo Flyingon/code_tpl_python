@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>二叉树</title>
+<meta name="Keywords" content="">
+<meta name="sdescription" content="">
+<style type="text/css">
+    *{margin:0;padding:0;}
+    a{text-decoration:none;color:#111;}
+    li{list-style:none;}
+    body{background:#FFF;font-size:14px;font-family:"微软雅黑";color:#666;}
+</style>
+</head>
+<body onload="draw();">
+    <canvas id="binary_tree" width="1200" height="600"></canvas>
+
+    <script type="text/javascript">
+
+    function draw() {
+        var binaryTree = document.getElementById('binary_tree');
+        var btContent = binaryTree.getContext('2d');
+        var btPoints = getBTPoints();
+        paintLines(btContent, btPoints);
+        paintCircles(btContent, btPoints);
+        paintText(btContent, btPoints);
+    }
+
+    function getBTPoints() {
+        var centerX = 600, centerY = 100, minW = 60, rowNum = 5;
+        var btPoints = [];
+        for (var i = 0; i < rowNum; i++) {
+            btPoints[i] = [];
+            if (i === 0) {
+                btPoints[0][0] = {x: centerX, y: centerY};
+            } else {
+                for (var j = 0; j < btPoints[i-1].length; j++) {
+                    btPoints[i][j*2] = {x: (btPoints[i-1][j].x-(minW/2)*Math.pow(2, (rowNum-1-i))), y: centerY+i*100};
+                    btPoints[i][j*2+1] = {x: (btPoints[i-1][j].x+(minW/2)*Math.pow(2, (rowNum-1-i))), y: centerY+i*100};
+                }
+            }
+        }
+        return btPoints;
+    }
+
+    function paintCircles(btContent, btPoints) {
+        var radius = 15, circleS = 0, circleE = Math.PI * 2;
+        for (var i = 0; i < btPoints.length; i++) {
+            for(var j = 0; j < btPoints[i].length; j++) {
+                btContent.beginPath();
+                btContent.fillStyle = '#F00';
+                btContent.arc(btPoints[i][j].x, btPoints[i][j].y, radius, circleS, circleE);
+                btContent.fill();
+            }
+        }
+    }
+
+    function paintLines(btContent, btPoints) {
+        for (var i = 0; i < btPoints.length; i++) {
+            if (i !== 0) {
+                console.log('*** ' + btPoints[i-1].length);
+                for (var j = 0; j < btPoints[i-1].length; j++) {
+                    btContent.moveTo(btPoints[i-1][j].x, btPoints[i-1][j].y);
+                    btContent.lineTo(btPoints[i][j*2].x, btPoints[i][j*2].y);
+                    btContent.stroke();
+                    btContent.moveTo(btPoints[i-1][j].x, btPoints[i-1][j].y);
+                    btContent.lineTo(btPoints[i][j*2+1].x, btPoints[i][j*2+1].y);
+                    btContent.stroke();
+                }
+            }
+        }
+    }
+
+    function paintText(btContent, btPoints) {
+        var s = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        var n = 0;
+        for (var i = 0; i < btPoints.length; i++) {
+            for (var j = 0; j < btPoints[i].length; j++) {
+                btContent.font = '20px Georgia';
+                btContent.fillStyle = '#FFF';
+                if (n === s.length) {
+                    n = 0;
+                }
+                btContent.fillText(s[n], btPoints[i][j].x-7, btPoints[i][j].y+7);
+                n++;
+            }
+        }
+    }
+    </script>
+</body>
+</html>
