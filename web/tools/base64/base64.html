@@ -1,0 +1,71 @@
+<div class="m-5">
+    <h3> Welcome to Base64 Tool</h3>
+
+    <div>
+        <div>
+            <label for="input" class="form-label"><strong>Input</strong></label>
+            <textarea class="form-control" id="input" rows="10"></textarea>
+        </div>
+        <br/>
+
+        <div>
+            <select class="btn btn-light" id="type">
+                <option selected>Normal</option>
+                <option value="pdf">PDF</option>
+            </select>
+            <button id="decode" type="button" class="btn btn-sm btn-success">Decode</button>
+            <button id="encode" type="button" class="btn btn-sm btn-warning">Encode</button>
+            <a id="download" type="button" class="btn btn-link disabled"></a>
+        </div>
+        <br/>
+        <div>
+            <label for="output" class="form-label"><strong>Output</strong></label>
+            <textarea class="form-control" id="output" rows="10"></textarea>
+        </div>
+    </div>
+</div>
+
+<script> // encode
+$("#encode").click(function () {
+    let areaOutput = $("#output");
+    areaOutput.val("");
+
+    let inText = $("#input").val();
+    let newText = btoa(inText);
+    areaOutput.val(newText);
+});
+</script>
+
+<script> // decode
+$("#decode").click(function () {
+    let areaOutput = $("#output");
+    areaOutput.val("");
+
+    let inText = $("#input").val();
+    let newText = inText;
+
+    if ($("#type").val() === "pdf") {
+        GeneratePDF(inText);
+    } else {
+        newText = atob(inText);
+        areaOutput.val(newText);
+    }
+});
+</script>
+
+<script>
+    function GeneratePDF(content) {
+        let base64URL = "data:application/pdf;base64," + content;
+        // let elemDownload = $("#download");
+        // elemDownload.text("download pdf");
+        // elemDownload.removeClass("disabled");
+        // elemDownload.attr("href", base64URL);
+        debugBase64(base64URL);
+    }
+
+    function debugBase64(base64URL) {
+        var win = window.open();
+        win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+    }
+</script>
+
